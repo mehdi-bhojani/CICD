@@ -4,8 +4,6 @@ env:
   variables:
     NODE_ENV: "production"
   export:
-    # Exporting environment variables from a file
-    # Create a file in CodeBuild with these variables
     secrets-manager:
       MONGODB_URI: "YourSecretsManagerKey:MONGODB_URI"
       NEXTAUTH_SECRET: "YourSecretsManagerKey:NEXTAUTH_SECRET"
