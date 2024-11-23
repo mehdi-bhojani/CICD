@@ -1,45 +1,21 @@
 version: 0.2
 
-env:
-  variables:
-    NODE_ENV: "production"
-  export:
-    secrets-manager:
-      MONGODB_URI: "YourSecretsManagerKey:MONGODB_URI"
-      NEXTAUTH_SECRET: "YourSecretsManagerKey:NEXTAUTH_SECRET"
-      JWT_SECRET: "YourSecretsManagerKey:JWT_SECRET"
-      GOOGLE_CLIENT_ID: "YourSecretsManagerKey:GOOGLE_CLIENT_ID"
-      GOOGLE_CLIENT_SECRET: "YourSecretsManagerKey:GOOGLE_CLIENT_SECRET"
-      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: "YourSecretsManagerKey:NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
-      STRIPE_SECRET_KEY: "YourSecretsManagerKey:STRIPE_SECRET_KEY"
-      STRIPE_WEBHOOK_SECRET: "YourSecretsManagerKey:STRIPE_WEBHOOK_SECRET"
-
 phases:
   install:
-    runtime-versions:
-      nodejs: 18
     commands:
-      - echo "Installing dependencies with PNPM..."
-      - corepack enable
-      - corepack prepare pnpm@latest --activate
-      - pnpm install
+      - sudo apt-get update -y
+      - sudo apt-get install -y nodejs npm
+
   build:
     commands:
-      - echo "Building the Next.js project..."
-      - pnpm build
-  post_build:
-    commands:
-      - echo "Build completed."
-      - echo "Contents of the build directory:"
-      - ls -la .next/
+      - npm install
+      - npm run build
 
 artifacts:
   files:
     - '**/*'
-  discard-paths: no
-  base-directory: .next
+  base-directory: dist
 
 cache:
   paths:
-    - "node_modules/**/*"
-    - ".pnpm-store/**/*"
+    - node_modules/**/*
